@@ -16,10 +16,26 @@ class Repost(models.Model):
     origin = models.ForeignKey('posts.Product', related_name='product_set')
 
 
+class ProductManager(models.Manager):
+    def get_queryset(self):
+        return ProductQuerySet(self.model)
+
+
+class ProductQuerySet(models.QuerySet):
+    def prefetch(self):
+        prefetch_repost = models.Prefetch('repost__origin',
+                                          queryset=Product.objects.all().select_related('user'),
+                                          to_attr='_origin')
+        queryset = self.prefetch_related(prefetch_repost)
+        return queryset.select_related('user', 'post', 'repost')
+
+
 class Product(models.Model):
     user = models.ForeignKey('users.User')
     post = models.ForeignKey('posts.Post', null=True)
     repost = models.ForeignKey('posts.Repost', null=True)
+
+    objects = ProductManager()
 
     @classmethod
     def fetch_list(cls, **kwargs):
