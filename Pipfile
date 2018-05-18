@@ -6,7 +6,9 @@ name = "pypi"
 [packages]
 celery = "*"
 redis = "*"
-django = "*"
+django = "<2"
+werkzeug = "*"
+elasticsearch = "*"
 
 [dev-packages]
 ipython = "*"

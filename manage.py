@@ -4,8 +4,8 @@ import sys
 
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "fuga.settings")
-    from django.db.backends.mysql.base import DatabaseWrapper
-    DatabaseWrapper.data_types = DatabaseWrapper._data_types
+    # from django.db.backends.mysql.base import DatabaseWrapper
+    # DatabaseWrapper.data_types = DatabaseWrapper._data_types
 
     try:
         from django.core.management import execute_from_command_line
