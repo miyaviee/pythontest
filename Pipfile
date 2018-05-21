@@ -9,6 +9,7 @@ redis = "*"
 django = "<2"
 werkzeug = "*"
 elasticsearch = "*"
+djangorestframework = "*"
 
 [dev-packages]
 ipython = "*"

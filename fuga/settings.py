@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'users',
     'posts',
 ]
@@ -123,6 +124,7 @@ STATIC_URL = '/static/'
 
 LOGGING = {
     'version': 1,
+    'disable_existing_loggers': False,
     'handlers': {
         'console': {
             'level': 'DEBUG',
@@ -130,6 +132,11 @@ LOGGING = {
         }
     },
     'loggers': {
+        'django.request': {
+            'level': 'ERROR',
+            'handlers': ['console'],
+            'propagate': False,
+        },
         'django.db.backends': {
             'level': 'DEBUG',
             'handlers': ['console'],
