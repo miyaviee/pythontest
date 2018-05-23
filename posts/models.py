@@ -8,7 +8,7 @@ from users.models import User
 class Post(models.Model):
     user = models.ForeignKey('users.User')
     title = models.TextField()
-    created_at = models.DateTimeField(default=None)
+    created_at = models.DateTimeField(auto_now_add=True)
     description = models.TextField()
 
 
