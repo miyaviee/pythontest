@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import models
+from django.db import models, connection
 from users.models import User
 
 
@@ -15,6 +15,7 @@ class Post(models.Model):
 class Repost(models.Model):
     user = models.ForeignKey('users.User')
     origin = models.ForeignKey('posts.Product', related_name='product_set')
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
 class ProductManager(models.Manager):
@@ -61,3 +62,22 @@ class Product(models.Model):
         for product in Product.objects.all():
             repost = Repost.objects.create(user=user, origin=product)
             Product.objects.create(user=user, repost=repost)
+
+    @classmethod
+    def product_data(cls, table_type, table_name):
+        query = """
+        select
+            p.id,
+            u.id,
+            %s,
+            p.created_at
+        from
+            %s as p
+        join users_user as u
+            on p.user_id = u.id
+        """
+        with connection.cursor() as cursor:
+            cursor.execute(query % (table_type, table_name))
+            id = '%s_id' % table_name.split('_')[1]
+            columns = [id, 'user_id', 'type', 'created_at']
+            return [dict(zip(columns, row)) for row in cursor.fetchall()]
