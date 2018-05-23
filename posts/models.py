@@ -64,20 +64,28 @@ class Product(models.Model):
             Product.objects.create(user=user, repost=repost)
 
     @classmethod
-    def raw_data(cls, table_type, table_name):
-        query = """
+    def raw_data(cls):
+        basequery = """
         select
             p.id,
             u.id,
-            {type},
-            p.created_at
+            p.created_at,
+            {type}
         from
             {table_name} as p
         join users_user as u
             on p.user_id = u.id
         """
+        raw_data = []
         with connection.cursor() as cursor:
-            cursor.execute(query.format(type=table_type, table_name=table_name))
-            id = '%s_id' % table_name.split('_')[1]
-            columns = [id, 'user_id', 'type', 'created_at']
-            return [dict(zip(columns, row)) for row in cursor.fetchall()]
+            query = basequery.format(type=1, table_name='posts_post')
+            cursor.execute(query)
+            columns = ['post_id', 'user_id', 'created_at', 'type']
+            raw_data.extend([dict(zip(columns, row)) for row in cursor.fetchall()])
+
+            query = basequery.format(type=2, table_name='posts_repost')
+            cursor.execute(query)
+            columns = ['repost_id', 'user_id', 'created_at', 'type']
+            raw_data.extend([dict(zip(columns, row)) for row in cursor.fetchall()])
+
+        return raw_data
