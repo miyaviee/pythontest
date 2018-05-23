@@ -129,13 +129,21 @@ LOGGING = {
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'logging.StreamHandler',
         }
     },
     'loggers': {
+        'django': {
+            'level': 'INFO',
+            'handlers': ['console'],
+        },
         'django.request': {
             'level': 'ERROR',
-            'handlers': ['console'],
-            'propagate': False,
+            'handlers': ['mail_admins'],
+            'propagate': True,
         },
         'django.db.backends': {
             'level': 'DEBUG',
