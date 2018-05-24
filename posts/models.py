@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+from datetime import datetime
 from django.db import models, connection
 from users.models import User
 
@@ -67,24 +67,30 @@ class Product(models.Model):
     def raw_data(cls):
         basequery = """
         select
-            p.id,
-            u.id,
-            p.created_at,
+            `p`.`id`,
+            `u`.`id`,
+            `p`.`created_at`,
             {type}
         from
-            {table_name} as p
-        join users_user as u
-            on p.user_id = u.id
+            `{table_name}` as `p`
+        join
+            `users_user` as `u`
+            on `p`.`user_id` = `u`.`id`
+        where
+            `p`.`created_at` between
+            %s and %s
         """
+        now = datetime.now()
+        params = [now, now]
         raw_data = []
         with connection.cursor() as cursor:
             query = basequery.format(type=1, table_name='posts_post')
-            cursor.execute(query)
+            cursor.execute(query, params=params)
             columns = ['post_id', 'user_id', 'created_at', 'type']
             raw_data.extend([dict(zip(columns, row)) for row in cursor.fetchall()])
 
             query = basequery.format(type=2, table_name='posts_repost')
-            cursor.execute(query)
+            cursor.execute(query, params=params)
             columns = ['repost_id', 'user_id', 'created_at', 'type']
             raw_data.extend([dict(zip(columns, row)) for row in cursor.fetchall()])
 
