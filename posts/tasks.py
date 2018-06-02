@@ -6,7 +6,7 @@ from elasticsearch import Elasticsearch
 from fuga.celery import app
 
 
-LOCK_EXPIRE = 60
+LOCK_EXPIRE = 5
 
 
 @contextmanager
