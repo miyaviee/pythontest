@@ -52,8 +52,7 @@ class Product(models.Model):
 
     @classmethod
     def seed(cls):
-        users = [User(name='test{}'.format(i), email='test{}@example.com'.format(i))
-                 for i in range(10)]
+        users = [User(name=f'test{i}', email='test{i}@example.com') for i in range(10)]
         User.objects.bulk_create(users)
         for user in User.objects.all():
             post = Post.objects.create(user=user, title='test{}'.format(user.id))
