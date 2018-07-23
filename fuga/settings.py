@@ -166,4 +166,4 @@ CACHES = {
 CELERY_REDIS_HOST = 'localhost'
 CELERY_ACCEPT_CONTENT = ['pickle']
 CELERY_TASK_SERIALIZER = 'pickle'
-BROKER_URL = '{}://{}/{}'.format('redis', CELERY_REDIS_HOST, 1)
+BROKER_URL = f'redis://{CELERY_REDIS_HOST}/1'
