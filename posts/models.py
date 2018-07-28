@@ -10,26 +10,36 @@ class Post(models.Model):
     title = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     description = models.TextField()
+    is_deleted = models.BooleanField(default=False)
 
 
 class Repost(models.Model):
     user = models.ForeignKey('users.User')
-    origin = models.ForeignKey('posts.Product', related_name='product_set')
+    post = models.ForeignKey('Post', null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    is_deleted = models.BooleanField(default=False)
 
 
 class ProductManager(models.Manager):
     def get_queryset(self):
         return ProductQuerySet(self.model)
 
+    def fetch_list(self, **kwargs):
+        queryset = self.get_queryset().filter(**kwargs)
+        return queryset.fetch_list()
+
 
 class ProductQuerySet(models.QuerySet):
+    def fetch_list(self):
+        queryset = self.filter(user__is_deleted=False)
+        queryset = queryset.exclude(post__is_deleted=True)
+        queryset = queryset.exclude(repost__is_deleted=True)
+        return queryset
+
     def prefetch(self):
-        prefetch_repost = models.Prefetch('repost__origin',
-                                          queryset=Product.objects.all().select_related('user'),
-                                          to_attr='_origin')
-        queryset = self.prefetch_related(prefetch_repost)
-        return queryset.select_related('user', 'post', 'repost')
+        queryset = self.select_related('post', 'post__user')
+        queryset = queryset.select_related('repost', 'repost__user')
+        return queryset
 
 
 class Product(models.Model):
