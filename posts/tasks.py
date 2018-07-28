@@ -1,9 +1,21 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, absolute_import
+from time import sleep
+from random import randint
 from contextlib import contextmanager
 from django.core.cache import cache
 from elasticsearch import Elasticsearch
 from fuga.celery import app
+
+
+@app.task(bind=True)
+def sum(self, x, y):
+    num = randint(0, 5)
+    if not num:
+        self.retry(max_retries=10, countdown=10)
+
+    sleep(num)
+    return x + y
 
 
 LOCK_EXPIRE = 5
