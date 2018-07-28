@@ -146,7 +146,7 @@ LOGGING = {
             'propagate': True,
         },
         'django.db.backends': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'handlers': ['console'],
             'propagate': False,
         },
@@ -167,3 +167,7 @@ CELERY_REDIS_HOST = 'localhost'
 CELERY_ACCEPT_CONTENT = ['pickle']
 CELERY_TASK_SERIALIZER = 'pickle'
 BROKER_URL = f'redis://{CELERY_REDIS_HOST}/1'
+
+import sys  # noqa
+if "shell" in sys.argv:
+    LOGGING['loggers']['django.db.backends']['level'] = 'DEBUG'
