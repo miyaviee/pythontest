@@ -163,6 +163,8 @@ CACHES = {
     }
 }
 
+CACHE_EXPIRE = 60
+
 CELERY_REDIS_HOST = 'localhost'
 CELERY_ACCEPT_CONTENT = ['pickle']
 CELERY_TASK_SERIALIZER = 'pickle'
