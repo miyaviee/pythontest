@@ -11,6 +11,8 @@ werkzeug = "*"
 elasticsearch = "*"
 djangorestframework = "*"
 django-redis = "*"
+uwsgi = "*"
+flower = "*"
 
 [dev-packages]
 ipython = "*"
