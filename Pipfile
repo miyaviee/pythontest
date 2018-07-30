@@ -18,6 +18,7 @@ flower = "*"
 ipython = "*"
 "flake8" = "*"
 "autopep8" = "*"
+radon = "*"
 
 [requires]
 python_version = "*"
