@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "8b5f75c03d6b4f92aaa0b75b9b97d2568f54ce36cea15f52266e11673dc8cbaa"
+            "sha256": "0893e936ca57972b83e248b30cd8344e2763f545086873c726b54370a3856ac5"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -36,6 +36,13 @@
             ],
             "version": "==3.5.0.4"
         },
+        "bjoern": {
+            "hashes": [
+                "sha256:ec5f8e4c9764f0dd5ad714f003bdbebfd6d94683d4c9c12cd5270c13d6c7a5bc"
+            ],
+            "index": "pypi",
+            "version": "==2.2.1"
+        },
         "celery": {
             "hashes": [
                 "sha256:2082cbd82effa8ac8a8a58977d70bb203a9f362817e3b66f4578117b9f93d8a9",
@@ -46,11 +53,11 @@
         },
         "django": {
             "hashes": [
-                "sha256:b7f77c0d168de4c4ad30a02ae31b9dca04fb3c10472f04918d5c02b4117bba68",
-                "sha256:eb9271f0874f53106a2719c0c35ce67631f6cc27cf81a60c6f8c9817b35a3f6e"
+                "sha256:8176ac7985fe6737ce3d6b2531b4a2453cb7c3377c9db00bacb2b3320f4a1311",
+                "sha256:b18235d82426f09733d2de9910cee975cf52ff05e5f836681eb957d105a05a40"
             ],
             "index": "pypi",
-            "version": "==1.11.14"
+            "version": "==1.11.15"
         },
         "django-redis": {
             "hashes": [

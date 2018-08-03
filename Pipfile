@@ -13,6 +13,7 @@ djangorestframework = "*"
 django-redis = "*"
 uwsgi = "*"
 flower = "*"
+bjoern = "*"
 
 [dev-packages]
 ipython = "*"
