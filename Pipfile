@@ -14,6 +14,7 @@ django-redis = "*"
 uwsgi = "*"
 flower = "*"
 bjoern = "*"
+mysqlclient = "*"
 
 [dev-packages]
 ipython = "*"
