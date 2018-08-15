@@ -5,8 +5,6 @@ from django.db import models
 from django.conf import settings
 from django.core.cache import cache
 
-# Create your models here.
-
 
 class User(models.Model):
     name = models.CharField(max_length=192)
