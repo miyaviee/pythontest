@@ -50,26 +50,16 @@ class Product(models.Model):
     objects = ProductManager()
 
     @classmethod
-    def fetch_list(cls, **kwargs):
-        prefetch_repost = models.Prefetch('repost__origin',
-                                          queryset=cls.objects.all().select_related('user'),
-                                          to_attr='_origin')
-
-        products = cls.objects.filter(**kwargs)
-        products = products.prefetch_related(prefetch_repost)
-
-        return products.select_related('user', 'post', 'repost')
-
-    @classmethod
     def seed(cls):
         users = [User(name=f'test{i}', email='test{i}@example.com') for i in range(10)]
         User.objects.bulk_create(users)
         for user in User.objects.all():
             post = Post.objects.create(user=user, title='test{}'.format(user.id))
             Product.objects.create(user=user, post=post)
+
         user = User.objects.create(name='reposter', email='reposter@example.com')
         for product in Product.objects.all():
-            repost = Repost.objects.create(user=user, origin=product)
+            repost = Repost.objects.create(user=user, post=product.post)
             Product.objects.create(user=user, repost=repost)
 
     @classmethod
