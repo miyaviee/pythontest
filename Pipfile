@@ -23,6 +23,8 @@ ipython = "*"
 radon = "*"
 memory-profiler = "*"
 coverage = "*"
+black = "*"
+yapf = "*"
 
 [requires]
 python_version = "*"
