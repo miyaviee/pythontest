@@ -31,14 +31,21 @@ class ProductManager(models.Manager):
 
 class ProductQuerySet(models.QuerySet):
     def fetch_list(self):
-        queryset = self.filter(user__is_deleted=False)
-        queryset = queryset.exclude(post__is_deleted=True)
-        queryset = queryset.exclude(repost__is_deleted=True)
+        queryset = self.filter(user__is_deleted=False) \
+            .exclude(post__is_deleted=True) \
+            .exclude(repost__is_deleted=True) \
+            .exclude(repost__user__is_deleted=True)
         return queryset
 
     def prefetch(self):
+        return self.prefetch_post().prefetch_repost()
+
+    def prefetch_post(self):
         queryset = self.select_related('post', 'post__user')
-        queryset = queryset.select_related('repost', 'repost__user')
+        return queryset
+
+    def prefetch_repost(self):
+        queryset = self.select_related('repost', 'repost__user')
         return queryset
 
 
