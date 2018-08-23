@@ -12,7 +12,7 @@ class User(models.Model):
     is_deleted = models.BooleanField(default=False)
 
     def cache_key(self, name):
-        return f'user:{self.id}:' + name
+        return f"user:{self.id}:" + name
 
     @property
     def posts(self):
@@ -24,28 +24,30 @@ class User(models.Model):
 
     @property
     def cache_key_post_count(self):
-        return self.cache_key_prefix + 'post_count'
+        return self.cache_key_prefix + "post_count"
 
     @property
     def post_count(self):
-        if not hasattr(self, '_post_count'):
-            self._post_count = cache.get(self.cache_key('post_count'))
+        if not hasattr(self, "_post_count"):
+            self._post_count = cache.get(self.cache_key("post_count"))
             if self._post_count is None:
                 self.cache_post_count()
         return self._post_count
 
     @property
     def repost_count(self):
-        if not hasattr(self, '_repost_count'):
-            self._repost_count = cache.get(self.cache_key('repost_count'))
+        if not hasattr(self, "_repost_count"):
+            self._repost_count = cache.get(self.cache_key("repost_count"))
             if self._repost_count is None:
                 self.cache_repost_count()
         return self._repost_count
 
     def cache_post_count(self):
         self._post_count = self.posts.count()
-        cache.set(self.cache_key('post_count'), self._post_count, settings.CACHE_EXPIRE)
+        cache.set(self.cache_key("post_count"), self._post_count, settings.CACHE_EXPIRE)
 
     def cache_repost_count(self):
         self._repost_count = self.reposts.count()
-        cache.set(self.cache_key('repost_count'), self._repost_count, settings.CACHE_EXPIRE)
+        cache.set(
+            self.cache_key("repost_count"), self._repost_count, settings.CACHE_EXPIRE
+        )

@@ -28,23 +28,23 @@ def task_lock(lock_id, oid):
 
 @app.task(bind=True)
 def follow(self, x, y):
-    lock_id = '{}-{}'.format(self.name, x)
+    lock_id = "{}-{}".format(self.name, x)
     with task_lock(lock_id, self.app.oid) as acquired:
         if acquired:
             elastic = Elasticsearch()
-            ctx = 'ctx._source.target_users'
-            source = 'if (!{ctx}.contains(params.user_id)) {ctx}.add(params.user_id)'
-            elastic.update(index='user',
-                           doc_type='_doc',
-                           id=x,
-                           body={
-                               'script': {
-                                   'source': source.format(ctx=ctx),
-                                   'params': {
-                                       'user_id': y,
-                                   }
-                               }
-                           })
+            ctx = "ctx._source.target_users"
+            source = "if (!{ctx}.contains(params.user_id)) {ctx}.add(params.user_id)"
+            elastic.update(
+                index="user",
+                doc_type="_doc",
+                id=x,
+                body={
+                    "script": {
+                        "source": source.format(ctx=ctx),
+                        "params": {"user_id": y},
+                    }
+                },
+            )
             return True
 
         follow.apply_async(args=(x, y), countdown=LOCK_EXPIRE)
@@ -52,23 +52,23 @@ def follow(self, x, y):
 
 @app.task(bind=True)
 def unfollow(self, x, y):
-    lock_id = '{}-{}'.format(self.name, x)
+    lock_id = "{}-{}".format(self.name, x)
     with task_lock(lock_id, self.app.oid) as acquired:
         if acquired:
             elastic = Elasticsearch()
-            ctx = 'ctx._source.target_users'
-            source = '{ctx}.removeIf(elem -> elem == params.user_id)'
-            elastic.update(index='user',
-                           doc_type='_doc',
-                           id=x,
-                           body={
-                               'script': {
-                                   'source': source.format(ctx=ctx),
-                                   'params': {
-                                       'user_id': y,
-                                   }
-                               }
-                           })
+            ctx = "ctx._source.target_users"
+            source = "{ctx}.removeIf(elem -> elem == params.user_id)"
+            elastic.update(
+                index="user",
+                doc_type="_doc",
+                id=x,
+                body={
+                    "script": {
+                        "source": source.format(ctx=ctx),
+                        "params": {"user_id": y},
+                    }
+                },
+            )
             return True
 
         unfollow.apply_async(args=(x, y), countdown=LOCK_EXPIRE)

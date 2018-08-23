@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'qfb7ct%0v@)%jdj(h=%cwlis&p1i=%2f7z+#77pexuga$x-*8('
+SECRET_KEY = "qfb7ct%0v@)%jdj(h=%cwlis&p1i=%2f7z+#77pexuga$x-*8("
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,55 +31,55 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rest_framework',
-    'users',
-    'posts',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "rest_framework",
+    "users",
+    "posts",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'fuga.urls'
+ROOT_URLCONF = "fuga.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+            ]
         },
-    },
+    }
 ]
 
-WSGI_APPLICATION = 'fuga.wsgi.application'
+WSGI_APPLICATION = "fuga.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
 
@@ -89,26 +89,20 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -120,56 +114,46 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-        },
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'logging.StreamHandler',
-        }
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {"level": "DEBUG", "class": "logging.StreamHandler"},
+        "mail_admins": {"level": "ERROR", "class": "logging.StreamHandler"},
     },
-    'loggers': {
-        'django': {
-            'level': 'INFO',
-            'handlers': ['console'],
+    "loggers": {
+        "django": {"level": "INFO", "handlers": ["console"]},
+        "django.request": {
+            "level": "ERROR",
+            "handlers": ["mail_admins"],
+            "propagate": True,
         },
-        'django.request': {
-            'level': 'ERROR',
-            'handlers': ['mail_admins'],
-            'propagate': True,
+        "django.db.backends": {
+            "level": "INFO",
+            "handlers": ["console"],
+            "propagate": False,
         },
-        'django.db.backends': {
-            'level': 'INFO',
-            'handlers': ['console'],
-            'propagate': False,
-        },
-    }
+    },
 }
 
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/1",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        }
+        "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
     }
 }
 
 CACHE_EXPIRE = 60
 
-CELERY_REDIS_HOST = 'localhost'
-CELERY_ACCEPT_CONTENT = ['pickle']
-CELERY_TASK_SERIALIZER = 'pickle'
-BROKER_URL = f'redis://{CELERY_REDIS_HOST}/1'
+CELERY_REDIS_HOST = "localhost"
+CELERY_ACCEPT_CONTENT = ["pickle"]
+CELERY_TASK_SERIALIZER = "pickle"
+BROKER_URL = f"redis://{CELERY_REDIS_HOST}/1"
 
 import sys  # noqa
+
 if "shell" in sys.argv:
-    LOGGING['loggers']['django.db.backends']['level'] = 'DEBUG'
+    LOGGING["loggers"]["django.db.backends"]["level"] = "DEBUG"

@@ -5,7 +5,7 @@ from celery import Celery
 from django.conf import settings
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "fuga.settings")
-app = Celery('fuga')
+app = Celery("fuga")
 
-app.config_from_object('django.conf:settings')
+app.config_from_object("django.conf:settings")
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
