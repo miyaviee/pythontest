@@ -12,7 +12,7 @@ class User(models.Model):
     is_deleted = models.BooleanField(default=False)
 
     def cache_key(self, name):
-        return f"user:{self.id}:" + name
+        return f"user:{self.id}:{name}"
 
     @property
     def posts(self):
@@ -21,10 +21,6 @@ class User(models.Model):
     @property
     def reposts(self):
         return self.repost_set.filter(is_deleted=False, post__is_deleted=False)
-
-    @property
-    def cache_key_post_count(self):
-        return self.cache_key_prefix + "post_count"
 
     @property
     def post_count(self):
