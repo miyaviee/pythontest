@@ -23,6 +23,7 @@ ipython = "*"
 radon = "*"
 memory-profiler = "*"
 coverage = "*"
+pylint = "*"
 
 [requires]
 python_version = "*"
