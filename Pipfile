@@ -24,6 +24,8 @@ radon = "*"
 memory-profiler = "*"
 coverage = "*"
 pylint = "*"
+black = "*"
+yapf = "*"
 
 [requires]
 python_version = "*"
