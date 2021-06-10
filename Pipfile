@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 celery = "==4.2"
 redis = "*"
-django = "<2"
+django = "<3"
 werkzeug = "*"
 elasticsearch = "*"
 djangorestframework = "*"
